@@ -1,0 +1,77 @@
+<!-- My Reports -->
+{% extends "aa_base.html" %} <!-- Includes Base content -->
+{% block content %}
+
+    <h2 style="text-align:center">{{ report_title }}</h2>  <!-- Report title -->
+    <div align="center">
+        <b>Reporting Date:</b> {{ reporting_date }}  <!-- Reporting date -->
+    </div>
+    <br>
+    <b>{{ service_date }}</b>{{ pre_date }} {{ date1 }} {{ between_date }} {{ date2 }}  <!-- Date range of report -->
+
+    <!-- User basic information table -->
+    <table class="pure-table pure-table-bordered">
+        <thead>
+        <tr>
+            <th valign="top">User Name</th>
+            <th valign="top">First Name</th>
+            <th valign="top">Last Name</th>
+            <th valign="top">Student Number</th>
+            <th valign="top">Grade</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <!-- username -->
+            <td valign="top">{{ user.username }}</td>
+            <!-- first name -->
+            <td valign="top">{{ user.first_name }}</td>
+            <!-- last name -->
+            <td valign="top">{{ user.last_name }}</td>
+            <!-- student number -->
+            <td valign="top">{{ user.profile.student_no }}</td>
+            <!-- grade level -->
+            <td valign="top">{{ user.profile.grade }}</td>
+        </tr>
+        </tbody>
+    </table>
+    </br>
+
+    <!-- Hours Log table -->
+    <table class="pure-table pure-table-bordered">
+        <thead>
+        <tr>
+            <th valign="top" width="20%">Service Date</th>
+            <th valign="top">Hours</th>
+            <th valign="top">Description</th>
+            <th valigh="top" width="20%">Date Logged</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for post in posts %}
+            <tr>
+                <!-- service date -->
+                <td valign="top">{{ post.service_date }}</td>
+                <!-- hours -->
+                <td valign="top">{{ post.hours }}</td>
+                <!-- description -->
+                <td valign="top">{{ post.desc }}</td>
+                <!-- date logged -->
+                <td valign="top">{{ post.date_posted.date }}</td>
+            </tr>
+        {% endfor %}
+        <tr>
+            <td>Total</td>
+            <!-- hours -->
+            <td>{{ total_hrs }}</td>
+            <!-- description -->
+            <td></td>
+             <!-- date logged -->
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+    <br>
+    <br>
+{% endblock content %}

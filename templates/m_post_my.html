@@ -1,0 +1,115 @@
+<!-- MyHours Page -->
+{% extends "aa_base.html" %} <!-- Includes Base content -->
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+    <!-- My Hours summary at top of page -->
+    <h3 class="mb-3">My Hours ({{ page_obj.paginator.count }} logs, Total {{ total_hrs }} hrs, {{ category }}
+        Award):</h3>
+    <!-- Output each log -->
+    {% for post in posts %}
+        <article class="media content-section">
+            <img class="rounded-circle article-img" src="{{ post.user.profile.image.url }}"> <!-- Profile picture -->
+            <div class="media-body">
+                <div class="article-metadata">
+                    <a class="text-muted">{{ post.user.first_name }} {{ post.user.last_name }}, </a> <!-- User first and last name -->
+                    <a class="mr-2">{{ post.service_date|date:"F d, Y" }}</a> <!-- Post service date -->
+                </div>
+                <h2><a class="article-title" style="color:DodgerBlue;"
+                       href="{% url 'post-detail' post.id %}">{{ post.hours }} hrs</a></h2> <!-- Post hours total, click to open detailed post -->
+                <p class="article-content">{{ post.desc }}</p> <!-- Post description -->
+            </div>
+        </article>
+    {% endfor %}
+
+    <!-- Pagination -->
+    {% if is_paginated %}
+        {% if page_obj.has_previous %}
+            <a class="btn btn-outline-danger mb-4" href="?page={{ page_obj.previous_page_number }}"><</a> <!-- Left Arrow if there is a previous page -->
+        {% endif %}
+
+        {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+                <a class="btn btn-danger mb-4" href="?page={{ num }}">{{ num }}</a>
+            {% elif num > page_obj.number|add:'-10' and num < page_obj.number|add:'10' %} <!-- Paginate by 10 posts per page -->
+                <a class="btn btn-outline-danger mb-4" href="?page={{ num }}">{{ num }}</a>
+            {% endif %}
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+            <a class="btn btn-outline-danger mb-4" href="?page={{ page_obj.next_page_number }}">></a> <!-- Right arrow if there is a next page -->
+        {% endif %}
+
+    {% endif %}
+
+{% endblock content %}
+
+{% block content2 %}
+    <!-- Reporting -->
+    <div class="col-md-4">
+        <div class="content-section">
+            <h5 align="center">Reports</h5>
+            <div class="vertical-center">
+                <div class="vertical-center">
+                    <!-- My free date range report -->
+                    <div class="col-md-12">
+                        <div class="content-section">
+                            <fieldset class="form-group">
+                                <legend class="border-bottom"><h6>My Free-Date-Range Hours</h6></legend>
+                                <form action="/posted/my/freely" method="POST"> <!-- Open/report url -->
+                                    {% csrf_token %}
+                                    <div>
+                                        <div class="container">
+                                            Service Date: <input id="startDate" name="startDate" width="200"
+                                                   value="1/01/2020"/> <!-- Start day default -->
+                                            To: <input id="endDate" name="endDate" width="200"/>
+                                        </div>
+                                        <!-- javascript for datepicker widget -->
+                                        <script>
+                                            $('#startDate').datepicker({
+                                                uiLibrary: 'bootstrap4',
+                                                iconsLibrary: 'fontawesome',
+                                                maxDate: function () {
+                                                    return $('#endDate').val(); <!-- Start date cannot be after end date  -->
+                                                }
+                                            });
+                                            $(document).ready(function () {
+                                                var dateNewFormat, today = new Date();
+                                                <!-- Convert text dates from screen to date format -->
+                                                if (today.getDate().toString().length == 2) {
+                                                    dateNewFormat = (today.getMonth() + 1) + '/' + today.getDate() + '/' + today.getFullYear();
+                                                } else {
+                                                    dateNewFormat = (today.getMonth() + 1) + '/0' + today.getDate() + '/' + today.getFullYear();
+                                                }
+                                                <!-- Default today's date as end date -->
+                                                $('#endDate').val(dateNewFormat);
+                                            });
+                                            var today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
+                                            $('#endDate').datepicker({
+                                                uiLibrary: 'bootstrap4',
+                                                iconsLibrary: 'fontawesome',
+                                                minDate: function () {
+                                                    return $('#startDate').val(); <!-- End date cannot be before start date  -->
+                                                }
+                                            });
+                                        </script>
+                                    </div>
+                                    <br>
+                                    <button class="btn btn-outline-success" type="submit"
+                                            style="float:left;margin-left:18%">
+                                        Open     <!-- Open button -->
+                                    </button>
+                                    <button class="btn btn-outline-success" type="submit"
+                                            style="float:right;margin-right:18%" formaction="/posted/my/freely/pdf"> <!-- pdf url -->
+                                        Print    <!-- Print button -->
+                                    </button>
+                                </form>
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content2 %}

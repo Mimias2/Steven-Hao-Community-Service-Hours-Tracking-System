@@ -1,0 +1,44 @@
+ <!-- User Posts page -->
+{% extends "aa_base.html" %} <!-- Includes Base content -->
+{% block content %}
+    <!-- Display posts from a specific user -->
+    <h3 class="mb-3">By {{ user.first_name }} {{ user.last_name }} ({{ page_obj.paginator.count }} logs,
+        Total {{ total_hrs }} hrs, {{ category }} Award):</h3>
+
+    <!-- Output each log -->
+    {% for post in posts %}
+        <article class="media content-section">
+            <img class="rounded-circle article-img" src="{{ post.user.profile.image.url }}"> <!-- Profile picture -->
+            <div class="media-body">
+                <div class="article-metadata">
+                    <a class="text-muted">{{ post.user.first_name }} {{ post.user.last_name }}, </a> <!-- User first and last name -->
+                    <a class="mr-2">{{ post.service_date|date:"F d, Y" }}</a> <!-- Post service date -->
+                </div>
+                <h2><a class="article-title" style="color:DodgerBlue;"
+                       href="{% url 'post-detail' post.id %}">{{ post.hours }} hrs</a></h2> <!-- Post hours total, click to open detailed post -->
+                <p class="article-content">{{ post.desc }}</p> <!-- Post description -->
+            </div>
+        </article>
+    {% endfor %}
+
+    <!-- Pagination -->
+    {% if is_paginated %}
+        {% if page_obj.has_previous %}
+            <a class="btn btn-outline-danger mb-4" href="?page={{ page_obj.previous }}"><</a> <!-- Left Arrow if there is a previous page -->
+        {% endif %}
+
+        {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+                <a class="btn btn-danger mb-4" href="?page={{ num }}">{{ num }}</a>
+            {% elif num > page_obj.number|add:'-10' and num < page_obj.number|add:'10' %} <!-- Paginate by 10 posts per page -->
+                <a class="btn btn-outline-danger mb-4" href="?page={{ num }}">{{ num }}</a>
+            {% endif %}
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+            <a class="btn btn-outline-danger mb-4" href="?page={{ page_obj.next_page_number }}">></a> <!-- Right arrow if there is a next page -->
+        {% endif %}
+
+    {% endif %}
+
+{% endblock content %}

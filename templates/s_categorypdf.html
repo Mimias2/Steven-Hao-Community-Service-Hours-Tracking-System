@@ -1,0 +1,37 @@
+<!-- CSA Category report in pdf form -->
+<html lang="en">
+
+<body>
+<div class='wrapper'>
+    <div class='header'>
+        <h1 align="center" class='title'>{{ report_title }} </h1> <!-- Report Title -->
+    </div>
+    <div align="center">
+        <b>Reporting Date:</b> {{ reporting_date }} <!-- Reporting Date -->
+    </div>
+
+</div>
+<hr/>
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th scope="col" align="left" valign="top">Total Hours</th>
+        <th scope="col" align="left" valign="top">Awards</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    {% for category in categories %}
+        <tr>
+            <!-- Category hours amount -->
+            <td valign="top">{{ category.category_total_hours }}</td>
+            <!-- Category name -->
+            <td valign="top">{{ category.category_text }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</body>
+<br>
+<br>
+</html>

@@ -1,0 +1,30 @@
+<!-- CSA Category report -->
+{% extends "aa_base.html" %} <!-- Includes Base content -->
+{% block content %}
+
+    <h2 style="text-align:center">{{ report_title }}</h2> <!-- Report title -->
+    <br>
+    <div align="center">
+        <b>Reporting Date:</b> {{ reporting_date }} <!-- Reporting date -->
+    </div>
+    <br>
+    <table class="pure-table pure-table-bordered">
+        <thead>
+        <tr>
+            <th scope="col" align="left" valign="top">Total Hours</th>
+            <th scope="col" align="left" valign="top">Awards</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for category in categories %}
+            <!-- Category hours amount -->
+            <td>{{ category.category_total_hours }}</td>
+            <!-- Category name -->
+            <td>{{ category.category_text }}</td>
+            <tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <br>
+    <br>
+{% endblock content %}

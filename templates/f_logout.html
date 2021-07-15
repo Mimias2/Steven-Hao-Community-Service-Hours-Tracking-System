@@ -1,0 +1,12 @@
+{% extends "aa_base.html" %} <!-- Includes Base content -->
+
+{% block content %}
+    <h2>You have been logged out.</h2> <!-- Title of page -->
+    <div class="border-top pt-3">
+        <small class="text-muted">
+            <a href="{% url 'login' %}">Log In Again</a> <!-- Hyperlink -->
+        </small>
+
+    </div>
+
+{% endblock content %}

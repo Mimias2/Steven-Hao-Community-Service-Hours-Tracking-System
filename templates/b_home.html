@@ -1,0 +1,49 @@
+<!-- Home Page -->
+{% extends "aa_base.html" %} <!-- Includes Base content -->
+{% load static %}
+{% block content %}
+    <div class="intro_icon"><img src="{% static 'images/Home2.png' %}" width="750" height="700" alt=""></div>  <!-- Home picture -->
+
+{% endblock content %}
+
+{% block content2 %}
+    <div class="col-md-4">
+        <!-- About Box on right side of home screen -->
+        <div class="col-md-12">
+            <div class="content-section">
+                <fieldset class="form-group">
+                    <legend class="border-bottom">
+                        <h7 style="color:#653a1e;">Learn More</h7> <!-- Name -->
+                    </legend>
+                    <form action="/about/" method="POST">
+                        {% csrf_token %}
+                        <button class="btn btn-outline-success" type="submit"
+                                style="float:left;margin-left:39%">About <!-- About Button -->
+                        </button>
+                    </form>
+                </fieldset>
+            </div>
+        </div>
+
+            <!-- Category Box on right side of home screen -->
+        <div class="col-md-12">
+            <div class="content-section">
+                <fieldset class="form-group">
+                    <legend class="border-bottom">
+                        <h7 style="color:#653a1e;">Community Service Hours Ranks</h7> <!-- Name -->
+                    </legend>
+                    <form action="posted/school/category" method="POST">
+                        {% csrf_token %}
+                        <button class="btn btn-outline-success" type="submit"
+                                style="float:left;margin-left:30%">View <!-- View Button -->
+                        </button>
+                        <button class="btn btn-outline-success" type="submit"
+                                style="float:right;margin-right:20%" formaction="/posted/school/category/pdf"> <!-- pdf url -->
+                            Print    <!-- Print button -->
+                        </button>
+                    </form>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+{% endblock content2 %}

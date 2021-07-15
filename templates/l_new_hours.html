@@ -1,0 +1,17 @@
+<!-- NewHours Page -->
+{% extends "aa_base.html" %} <!-- Includes Base content -->
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="content-section">
+        <form method="POST">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">New Hours</legend> <!-- Title of Page -->
+                {{ form|crispy }}
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline-success" type="submit">Log</button> <!-- Log hours Button to save post -->
+            </div>
+        </form>
+    </div>
+{% endblock content %}

@@ -1,0 +1,96 @@
+<!-- My Reports in pdf format -->
+<html lang="en">
+
+<body>
+<div class='wrapper'>
+    <div class='header'>
+        <h1 align="center" class='title'>{{ report_title_1 }} </h1> <!-- System title -->
+        <h1 align="center" class='title'>{{ report_title_2 }} </h1> <!-- Report Title -->
+        <div align="center">
+            <b>Reporting Date:</b> {{ reporting_date }} <!-- Reporting Date -->
+        </div>
+        <b>{{ service_date }}</b>{{ pre_date }} {{ date1 }} {{ between_date }} {{ date2 }} <!-- Date range of report -->
+    </div>
+</div>
+<hr/>
+
+<!-- User basic information table -->
+<table class="pure-table pure-table-bordered">
+    <thead>
+    <tr>
+        <th scope="col" align="left">User Name</th>
+        <th scope="col" align="left">First Name</th>
+        <th scope="col" align="left">Last Name</th>
+        <th scope="col" align="left">Student Number</th>
+        <th scope="col" align="left">Grade</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <!-- username -->
+        <td valign="top" style="width: 35%">{{ user.username }}</td>
+        <!-- first name -->
+        <td valign="top">{{ user.first_name }}</td>
+        <!-- last name -->
+        <td valign="top">{{ user.last_name }}</td>
+        <!-- student number -->
+        <td valign="top">{{ user.profile.student_no }}</td>
+        <!-- grade -->
+        <td valign="top">{{ user.profile.grade }}</td>
+    </tr>
+    </tbody>
+</table>
+<br>
+
+<!-- Hours Log table -->
+<table class="pure-table pure-table-bordered">
+    <thead>
+    <tr>
+        <th scope="col" align="left" width="20%">Service Date</th>
+        <th scope="col" align="left">Hours</th>
+        <th scope="col" align="left">Description</th>
+        <th scope="col" align="left" width="20%">Date Logged</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    {% for post in posts %}
+        <tr>
+            <!-- service date -->
+            <td scope="row" valign="top">{{ post.service_date }}</td>
+            <!-- hours -->
+            <td valign="top">{{ post.hours }}</td>
+            <!-- description -->
+            <td valign="top">{{ post.desc }}</td>
+            <!-- date logged -->
+            <td valign="top">{{ post.date_posted.date }}</td>
+        </tr>
+    {% endfor %}
+    <tr>
+        <!-- Asterisk used to separate total from items -->
+        <!-- service date -->
+        <td>********************</td>
+        <!-- hours -->
+        <td>**********</td>
+        <!-- description -->
+        <td>********************</td>
+        <!-- date logged -->
+        <td>********************</td>
+    </tr>
+    <tr>
+        <td td scope="row" valign="top">Total</td>
+        <!-- hours -->
+        <td>{{ total_hrs }}</td>
+        <!-- description -->
+        <td></td>
+        <!-- date logged -->
+        <td></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+<br>
+<br>
+</html>
+
+

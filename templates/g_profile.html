@@ -1,0 +1,27 @@
+<!-- Profile Page -->
+{% extends "aa_base.html" %} <!-- Includes Base content -->
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="content-section">
+        <!-- Profile Page Top Section -->
+        <div class="media">
+            <img class="rounded-circle account-img" src="{{ user.profile.image.url }}"> <!-- Profile Image in circle style -->
+            <div class="media-body">
+                <h2 class="account-heading">{{ user.first_name }} {{ user.last_name }}</h2> <!-- User First and Last Name -->
+                <p class="text-secondary">{{ user.username }}</p> <!-- User Username -->
+            </div>
+        </div>
+        <!-- Profile Page Information -->
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Profile Information</legend> <!-- Title of page -->
+                {{ u_form|crispy }}   <!-- User form -->
+                {{ p_form|crispy }}   <!-- Profile form -->
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">Update</button> <!-- Update button to save information -->
+            </div>
+        </form>
+    </div>
+{% endblock content %}

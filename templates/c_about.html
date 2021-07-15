@@ -1,0 +1,19 @@
+<!-- About Page -->
+{% extends "aa_base.html" %} <!-- Includes Base content -->
+{% load static %}
+{% block content %}
+    <h2>Welcome to the Community Service Hours Tracking System! </h2>
+    <br>
+    <p>Our mission is to provide a simple, effective way to keep track of all of your Community Service Hours. The
+        Community Service Hours Tracking System allows you to log, edit, and view reports for all of your
+        community service activities. Easily create new hour logs using the NewHours page. You can also access all of
+        your own logs with the MyHours page or view all of your fellow classmates' hours with the SchoolHours page.
+        Reports for your logs are found in both MyHours and SchoolHours. You can access these reports in summarized or
+        free date range spans. You can also print out your reports.</p>
+    <br>
+    <p>The Community Service Hours Tracking System provides a simple community service hour logging system, so you can spend
+{#        more of your time actually helping in your community. Get started today <a#}
+{#                href="http://127.0.0.1:8000/register/">here.</a>#}
+    </p>
+    <div class="intro_icon"><img src="{% static 'images/about.png' %}" alt=""></div>
+{% endblock content %}

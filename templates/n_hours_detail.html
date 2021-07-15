@@ -1,0 +1,23 @@
+<!-- Detailed Post page -->
+{% extends "aa_base.html" %} <!-- Includes Base content -->
+{% block content %}
+    <article class="media content-section">
+        <img class="rounded-circle article-img" src="{{ post.user.profile.image.url }}"> <!-- Profile Image in circle style -->
+        <div class="media-body">
+            <div class="article-metadata">
+                <a class="text-muted">{{ object.user.first_name }} {{ object.user.last_name }},</a> <!-- User First and Last Name -->
+                <a class="mr-2" style="color:#000000;">{{ object.service_date|date:"F d, Y" }}</a> <!-- Service date of post -->
+                <!-- If logged in user is the post's user, allow the logged in user to edit/delete the log -->
+                {% if object.user == user %}
+                    <div>
+                        <a class="btn btn-info btn-sm mt-1 mb-1"
+                           href="{% url 'post-update' object.id %}">Update</a> <!-- Update button -->
+                        <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'post-delete' object.id %}">Delete</a> <!-- Delete Button -->
+                    </div>
+                {% endif %}
+            </div>
+            <h2 class="article-title">{{ object.hours }} hrs</h2> <!-- Amount of hours in post -->
+            <p class="article-content">{{ object.desc }}</p> <!-- Post description -->
+        </div>
+    </article>
+{% endblock content %}

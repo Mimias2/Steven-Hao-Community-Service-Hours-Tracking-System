@@ -1,0 +1,28 @@
+<!-- Login Page -->
+{% extends "aa_base.html" %} <!-- Includes Base content -->
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="content-section">
+        <!-- login information form -->
+        <form method="POST">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Log In</legend> <!-- Title of page -->
+                {{ form|crispy }}
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">Log In</button> <!-- Log in button -->
+                <small class="text-muted ml-2">
+                    <a href="{% url 'password_reset' %}">Forgot Password?</a> <!-- Hyperlink to password reset page -->
+                </small>
+            </div>
+        </form>
+        <!-- link to register page -->
+        <div class="border-top pt-3">
+            <small class="text-muted">
+                Need An Account? <a class="ml-2" href="{% url 'register' %}">Sign Up Now</a>
+            </small>
+
+        </div>
+    </div>
+{% endblock content %}

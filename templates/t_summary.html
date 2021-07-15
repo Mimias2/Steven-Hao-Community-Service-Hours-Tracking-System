@@ -1,0 +1,72 @@
+<!-- Chapter Summary Report -->
+{% extends "aa_base.html" %} <!-- Includes Base content -->
+{% block content %}
+
+    <h2 style="text-align:center">{{ report_title }}</h2> <!-- Report title -->
+    <br>
+    <div align="center">
+        <b>Reporting Date:</b> {{ reporting_date }} <!-- Reporting date -->
+    </div>
+    <br>
+    <table class="pure-table pure-table-bordered">
+        <thead>
+        <tr>
+            <th scope="col" align="left" valign="top">User Name</th>
+            <th scope="col" align="left" valign="top">First Name</th>
+            <th scope="col" align="left" valign="top">Last Name</th>
+            <th scope="col" align="left" valign="top">Student No</th>
+            <th scope="col" align="left" valign="top">Grade</th>
+            <th scope="col" align="left" valign="top">Total Hours</th>
+            <th scope="col" align="left" valign="top">Awards</th>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        <!-- Loop for every post -->
+        {% for post in posts %}
+            <tr>
+                <!-- Loop every user for the post -->
+                {% for user in users %}
+                    {% if user.id == post.user_id %}
+                        <!-- Once found post user, display user username, first name, and last name  -->
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.first_name }}</td>
+                        <td>{{ user.last_name }}</td>
+                    {% endif %}
+                {% endfor %}
+
+                <!-- Loop every profile for the post -->
+                {% for profile in profiles %}
+                    {% if profile.user_id == post.user_id %}
+                        <!-- Once found post profile, display profile student number and grade -->
+                        <td>{{ profile.student_no }}</td>
+                        <td>{{ profile.grade }}</td>
+                    {% endif %}
+                {% endfor %}
+
+                <!-- User Total Hours -->
+                <td>{{ post.total_hours }}</td>
+
+                <!-- Get user's award level based on user's total logged hours -->
+                <!-- If total hours is between category 1 and 2 -->
+                {% if category_1.category_total_hours <= post.total_hours and post.total_hours < category_2.category_total_hours %}
+                    <td>{{ category_1.category_text }}</td> <!-- set user category to category 1 text -->
+                <!-- If total hours is between category 2 and 3 -->
+                {% elif category_2.category_total_hours <= post.total_hours and post.total_hours < category_3.category_total_hours %}
+                    <td>{{ category_2.category_text }}</td> <!-- set user category to category 2 text -->
+                <!-- If total hours is greater or equal to category 3 -->
+                {% elif category_3.category_total_hours <= post.total_hours %}
+                    <td>{{ category_3.category_text }}</td> <!-- set user category to category 3 text -->
+                <!-- If total hours is less than category 1 -->
+                {% else %}
+                    <td></td> <!-- Set user award category to none -->
+                {% endif %}
+
+            <tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <br>
+    <br>
+{% endblock content %}
